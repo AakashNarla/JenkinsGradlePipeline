@@ -21,16 +21,16 @@ node {
 	}
 	
 	stage("Code coverage") {
-     steps {
-          sh "./gradlew jacocoTestReport"
-          publishHTML (target: [
-               reportDir: 'build/reports/jacoco/test/html',
-               reportFiles: 'index.html',
-               reportName: "JaCoCo Report"
-          ])
-          sh "./gradlew jacocoTestCoverageVerification"
-     }
-}
+    	steps {
+        	sh "./gradlew jacocoTestReport"
+          	publishHTML (target: [
+            	reportDir: 'build/reports/jacoco/test/html',
+            	reportFiles: 'index.html',
+             	reportName: "JaCoCo Report"
+          	])
+          	sh "./gradlew jacocoTestCoverageVerification"
+     	}
+	}
 
     stage('Build image') {
         /* This builds the actual image; synonymous to
