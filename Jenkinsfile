@@ -36,26 +36,34 @@ pipeline {
 		   	}
 	    }
 	    
-	  	stage("Docker login") {
+	  	stage("Docker Push") {
       		steps {
-      			docker.withRegistry('https://registrynxbnsf.azurecr.io', 'acr-regcred') {
-	            	 sh "docker push demo-image:${env.BUILD_NUMBER}"
-	            	 sh "docker push demo-image:latest"
+      			// Build and push image with Jenkins' docker-plugin
+			    script {
+	      			docker.withRegistry('https://registrynxbnsf.azurecr.io', 'acr-regcred') {
+		            	 sh "docker push demo-image:${env.BUILD_NUMBER}"
+		            	 sh "docker push demo-image:latest"
+					}
 				}
       		}
     	}
-    	
-	    stage('Push image') {
-	        /* Finally, we'll push the image with two tags:
-	         * First, the incremental build number from Jenkins
-	         * Second, the 'latest' tag.
-	         * Pushing multiple tags is cheap, as all the layers are reused. */
-	        docker.withRegistry('https://registrynxbnsf.azurecr.io', 'acr-regcred') {
-	            app.push("${env.BUILD_NUMBER}")
-	            app.push("latest")
-	        }
-	
-	    }
+    	/*stage ('Docker Build') {
+  			steps {
+			    // prepare docker build context
+			    sh "cp target/project.war ./tmp-docker-build-context"
+			
+			    // Build and push image with Jenkins' docker-plugin
+			    script {
+			      withDockerServer([uri: "tcp://<my-docker-socket>"]) {
+			        withDockerRegistry([credentialsId: 'acr-regcred', url: "https://https://registrynxbnsf.azurecr.io/"]) {
+			            // we give the image the same version as the .war package
+			            def image = docker.build("<myDockerRegistry>/<myDockerProjectRepo>:${branchVersion}", "--build-arg PACKAGE_VERSION=${branchVersion} ./tmp-docker-build-context")
+			            image.push()
+			        }
+			      }
+			    }
+			  }
+		}*/
     
 	    stage('Go to production?') {
 	    	agent none
