@@ -1,5 +1,6 @@
 import hudson.plugins.cobertura.targets.CoverageMetric;
 pipeline {
+	agent any
 	 triggers {
     	pollSCM('* * * * *')
   	}
@@ -30,13 +31,20 @@ pipeline {
 		}
 
 	    stage('Build image') {
-	        /* This builds the actual image; synonymous to
-	         * docker build on the command line */
-	
-	        app = docker.build("demo-image:${env.BUILD_ID}")
+	    	steps {
+		    	sh "docker build -t demo-image:${env.BUILD_ID} ."
+		   	}
 	    }
-
-
+	    
+	  	stage("Docker login") {
+      		steps {
+      			docker.withRegistry('https://registrynxbnsf.azurecr.io', 'acr-regcred') {
+	            	 sh "docker push demo-image:${env.BUILD_NUMBER}"
+	            	 sh "docker push demo-image:latest"
+				}
+      		}
+    	}
+    	
 	    stage('Push image') {
 	        /* Finally, we'll push the image with two tags:
 	         * First, the incremental build number from Jenkins
