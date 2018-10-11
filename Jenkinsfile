@@ -1,5 +1,5 @@
 import hudson.plugins.cobertura.targets.CoverageMetric;
-node {
+pipeline {
     def app
 
     stage('Clone repository') {
