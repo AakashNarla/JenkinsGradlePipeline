@@ -48,7 +48,7 @@ pipeline {
 			    script {
 	      			docker.withRegistry('https://registrynxbnsf.azurecr.io', 'acr-regcred') {
 		            	 sh "docker push registrynxbnsf.azurecr.io/first-image:${env.BUILD_NUMBER}"
-		            	 sh "docker registrynxbnsf.azurecr.io/push first-image:latest"
+		            	 sh "docker push registrynxbnsf.azurecr.io/first-image:latest"
 					}
 				}
       		}
