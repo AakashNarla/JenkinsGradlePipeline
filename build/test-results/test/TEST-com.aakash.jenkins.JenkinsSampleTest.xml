@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.aakash.jenkins.JenkinsSampleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-10-11T06:14:13" hostname="01hw1010314" time="0.0">
+  <properties/>
+  <testcase name="testMain" classname="com.aakash.jenkins.JenkinsSampleTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
