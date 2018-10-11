@@ -1,11 +1,10 @@
 import hudson.plugins.cobertura.targets.CoverageMetric;
 pipeline {
+	 triggers {
+    	pollSCM('* * * * *')
+  	}
     stages {
-    	stage('Clone repository') {
-        	/* Let's make sure we have the repository cloned to our workspace */
-        	checkout scm
-    	}
-    	
+    	    	
     	stage("Compile") {
       		steps {
        			sh "./gradlew compileJava"
