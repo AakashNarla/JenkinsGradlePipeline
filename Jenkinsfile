@@ -47,8 +47,9 @@ pipeline {
       			// Build and push image with Jenkins' docker-plugin
 			    script {
 	      			docker.withRegistry('https://registrynxbnsf.azurecr.io', 'acr-regcred') {
-		            	 sh "docker push registrynxbnsf.azurecr.io/first-image:${env.BUILD_NUMBER}"
-		            	 sh "docker push registrynxbnsf.azurecr.io/first-image:latest"
+	      				sh "docker tag registrynxbnsf.azurecr.io/first-image:${env.BUILD_ID} registrynxbnsf.azurecr.io/first-image:latest"
+		            	sh "docker push registrynxbnsf.azurecr.io/first-image:${env.BUILD_NUMBER}"
+		            	sh "docker push registrynxbnsf.azurecr.io/first-image:latest"
 					}
 				}
       		}
