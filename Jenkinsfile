@@ -17,6 +17,12 @@ pipeline {
         		sh "./gradlew test"
       		}
     	}
+    	
+    	stage("Build") {
+	    	steps {
+	        	sh "./gradlew build"
+	      	}
+	   	}
 	
 		/*stage("Code coverage") {
     		steps {
