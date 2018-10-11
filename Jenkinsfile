@@ -7,6 +7,30 @@ node {
 
         checkout scm
     }
+    
+    stage('Compile') {
+ 		steps {
+ 			sh './gradlew compileJava'
+ 		}
+	}
+	
+	stage('Unit test') {
+		steps {
+	 		sh './gradlew test'
+	 	}
+	}
+	
+	stage("Code coverage") {
+     steps {
+          sh "./gradlew jacocoTestReport"
+          publishHTML (target: [
+               reportDir: 'build/reports/jacoco/test/html',
+               reportFiles: 'index.html',
+               reportName: "JaCoCo Report"
+          ])
+          sh "./gradlew jacocoTestCoverageVerification"
+     }
+}
 
     stage('Build image') {
         /* This builds the actual image; synonymous to
@@ -25,7 +49,18 @@ node {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
-         junit '**/nosetests.xml'
-         step([$class: 'CoberturaPublisher', autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false])
+
     }
+    
+    stage('Go to production?') {
+    	agent none
+     	steps {
+        	script {
+            	timeout(time: 1, unit: 'DAYS') {
+                	input message: 'Approve deployment?'
+             	}
+         	}
+        }
+	}
+
 }

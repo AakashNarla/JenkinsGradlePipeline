@@ -1,6 +1,4 @@
 FROM openjdk:8-jdk
 
-COPY /src/com/bnsf/jenkins/JenkinsSample.java /src/com/bnsf/jenkins/JenkinsSample.java
-WORKDIR /src/com/bnsf/jenkins/
-RUN javac JenkinsSample.java
-CMD ["java", "JenkinsSample"]
+ADD build/libs/jenkins-sample-1.0.jar app.jar
+ENTRYPOINT [ "java", "-jar", "app.jar" ]
