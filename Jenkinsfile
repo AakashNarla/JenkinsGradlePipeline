@@ -20,6 +20,12 @@ pipeline {
     	stage("Report Generation") {
       		steps {
 				jacoco buildOverBuild: true, changeBuildStatus: true, deltaInstructionCoverage: '60', maximumInstructionCoverage: '85', minimumInstructionCoverage: '60'		
+		  		script {
+	                if (currentBuild.result == 'FAILURE') {
+	                    echo "${currentBuild.result} JaCoCo coverage report NOT ENOUGH"
+	                    sh 'exit 1'
+	                }
+				}
 	  		}
     	}
     	
