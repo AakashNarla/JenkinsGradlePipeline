@@ -20,13 +20,7 @@ pipeline {
     	stage("Report Generation") {
       		steps {
 				jacoco changeBuildStatus: true, deltaInstructionCoverage: '80',  maximumInstructionCoverage: '85', minimumInstructionCoverage: '60'		
-				script {
-				    if( run.result == 'FAILURE' ) {			
-				   		return
-					}				    
-				}
-
-      		}
+	  		}
     	}
     	
     	stage("Build") {
