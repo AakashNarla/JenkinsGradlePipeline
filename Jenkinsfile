@@ -15,6 +15,8 @@ pipeline {
     	stage("Unit test") {
       		steps {
         		sh "./gradlew test"
+
+				jacoco buildOverBuild: true, deltaInstructionCoverage: '0.80'
       		}
     	}
     	
