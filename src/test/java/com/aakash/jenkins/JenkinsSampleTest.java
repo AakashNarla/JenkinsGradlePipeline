@@ -9,9 +9,10 @@ public class JenkinsSampleTest {
 
 	@Test
 	public void testMain() {
-		int total =JenkinsSample.addition(3, 5);
+		JenkinsSample js =new JenkinsSample();
+		int total =js.addition(3, 5);
 		assertEquals(8,total);
-		total =JenkinsSample.addition(3, 9);
+		total =js.addition(3, 9);
 		assertNotEquals(8,total);
 	}
 }
