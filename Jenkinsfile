@@ -15,8 +15,11 @@ pipeline {
     	stage("Unit test") {
       		steps {
         		sh "./gradlew test"
-
-				jacoco buildOverBuild: true, deltaInstructionCoverage: '80'
+      		}
+    	}
+    	stage("Report Generation") {
+      		steps {
+				jacoco changeBuildStatus: true, deltaInstructionCoverage: '80', maximumInstructionCoverage: '90'
       		}
     	}
     	
