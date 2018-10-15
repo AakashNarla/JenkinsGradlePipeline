@@ -19,13 +19,13 @@ pipeline {
     	}
     	stage("Report Generation") {
       		steps {
-				jacoco changeBuildStatus: true, deltaInstructionCoverage: '80',  maximumInstructionCoverage: '85', minimumInstructionCoverage: '60'
+				jacoco changeBuildStatus: true, deltaInstructionCoverage: '80',  maximumInstructionCoverage: '85', minimumInstructionCoverage: '60'		
 				
-				if( currentBuild.result == 'FAILURE' ) {			
-				   return
-				}
       		}
     	}
+    	if( currentBuild.result == 'FAILURE' ) {			
+				   return
+		}
     	
     	stage("Build") {
 	    	steps {
