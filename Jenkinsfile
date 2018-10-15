@@ -19,7 +19,7 @@ pipeline {
     	}
     	stage("Report Generation") {
       		steps {
-				jacoco changeBuildStatus: true, deltaInstructionCoverage: '80', maximumInstructionCoverage: '90'
+				jacoco changeBuildStatus: true, deltaInstructionCoverage: '80',  maximumInstructionCoverage: '85', minimumInstructionCoverage: '60'
       		}
     	}
     	
