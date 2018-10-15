@@ -2,7 +2,6 @@ package com.aakash.jenkins;
 
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class JenkinsSampleTest {
@@ -12,7 +11,7 @@ public class JenkinsSampleTest {
 		JenkinsSample js =new JenkinsSample();
 		int total =js.addition(3, 5);
 		assertEquals(8,total);
-		total =js.addition(3, 9);
+		total =js.multiply(3, 9);
 		assertNotEquals(8,total);
 	}
 }
